@@ -23,19 +23,20 @@ public class Mantenimiento_Unidad extends javax.swing.JFrame {
      */
      public void llenadoDeTablas() {
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("ID Bodega");
-        modelo.addColumn("Nombre Bodega");
-        modelo.addColumn("Estatus Bodega");
+        modelo.addColumn("ID Unidad");
+        modelo.addColumn("Unidad");
+        modelo.addColumn("Acronimo Unidad");
+        modelo.addColumn("Estatus");
         UnidadDAO unidadDAO = new UnidadDAO();
 
         List<Unidad> unidad = unidadDAO.select();
         Tbl_unidad.setModel(modelo);
-        String[] dato = new String[3];
+        String[] dato = new String[4];
         for (int i = 0; i < unidad.size(); i++) {
-            dato[0] = Integer.toString(unidad.get(i).getPKcodigoUnidad());
-            dato[1] = unidad.get(i).getUnidadEntrada();
-            dato[2] = unidad.get(i).getUnidadSalida();
-
+            dato[0] = unidad.get(i).getPKcodigoUnidad();
+            dato[1] = unidad.get(i).getNombre_unidad();
+            dato[2] = unidad.get(i).getMedida_acronimo();
+            dato[3] = unidad.get(i).getEstatus_unidad();
             //System.out.println("vendedor:" + vendedores);
             modelo.addRow(dato);
         }
@@ -44,17 +45,18 @@ public class Mantenimiento_Unidad extends javax.swing.JFrame {
     public void buscar() {
         Unidad unidadAConsultar = new Unidad();
         UnidadDAO unidadDAO = new UnidadDAO();
-        unidadAConsultar.setPKcodigoUnidad(Integer.parseInt(Txt_id.getText()));
+        unidadAConsultar.setPKcodigoUnidad(String.valueOf(Txt_id.getText()));
         unidadAConsultar = unidadDAO.query(unidadAConsultar);
-        Txt_unidadentrada.setText(unidadAConsultar.getUnidadEntrada());
-        Txt_unidadsalida.setText(String.valueOf(unidadAConsultar.getUnidadSalida()));
-//        cbx_bodega.setSelectedItem(String.valueOf(0));
+        Txt_nombreunidad.setText(unidadAConsultar.getNombre_unidad());
+        Txt_acronimomedida.setText(String.valueOf(unidadAConsultar.getMedida_acronimo()));
+        Txt_estatus.setText(String.valueOf(unidadAConsultar.getEstatus_unidad()));
     }
 
     public void limpiar() {
         Txt_id.setText("");
-        Txt_unidadentrada.setText("");
-        Txt_unidadsalida.setText("");
+        Txt_nombreunidad.setText("");
+        Txt_acronimomedida.setText("");
+        Txt_estatus.setText("");
 //        cbx_bodega.setSelectedIndex(0);
     }
     public Mantenimiento_Unidad() {
@@ -76,16 +78,19 @@ public class Mantenimiento_Unidad extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         Txt_id = new javax.swing.JTextField();
-        Txt_unidadentrada = new javax.swing.JTextField();
-        Txt_unidadsalida = new javax.swing.JTextField();
+        Txt_nombreunidad = new javax.swing.JTextField();
+        Txt_acronimomedida = new javax.swing.JTextField();
         Btn_Guardar = new javax.swing.JButton();
         Btn_Modificar = new javax.swing.JButton();
         Btn_Eliminar = new javax.swing.JButton();
         Btn_Buscar = new javax.swing.JButton();
         Btn_Reporte = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        Txt_estatus = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tbl_unidad = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,13 +100,13 @@ public class Mantenimiento_Unidad extends javax.swing.JFrame {
 
         jLabel2.setText("ID");
 
-        jLabel3.setText("Unidad Entrada");
+        jLabel3.setText("Nombre Unidad");
 
-        jLabel4.setText("Unidad Salida");
+        jLabel4.setText("Medida Acronimo");
 
-        Txt_unidadentrada.addActionListener(new java.awt.event.ActionListener() {
+        Txt_nombreunidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Txt_unidadentradaActionPerformed(evt);
+                Txt_nombreunidadActionPerformed(evt);
             }
         });
 
@@ -135,57 +140,64 @@ public class Mantenimiento_Unidad extends javax.swing.JFrame {
 
         Btn_Reporte.setText("Reporte");
 
+        jLabel5.setText("Estatus");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Txt_id)
-                            .addComponent(Txt_unidadentrada)
-                            .addComponent(Txt_unidadsalida, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(Btn_Buscar))
+                        .addComponent(Txt_estatus, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(Btn_Guardar)
-                        .addGap(28, 28, 28)
-                        .addComponent(Btn_Modificar)
-                        .addGap(18, 18, 18)
-                        .addComponent(Btn_Eliminar)
-                        .addGap(18, 18, 18)
-                        .addComponent(Btn_Reporte)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Txt_nombreunidad)
+                            .addComponent(Txt_acronimomedida)
+                            .addComponent(Txt_id))
+                        .addGap(40, 40, 40)
+                        .addComponent(Btn_Buscar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(Btn_Guardar)
+                .addGap(28, 28, 28)
+                .addComponent(Btn_Modificar)
+                .addGap(18, 18, 18)
+                .addComponent(Btn_Eliminar)
+                .addGap(18, 18, 18)
+                .addComponent(Btn_Reporte)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(Txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(Btn_Buscar)))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(Txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Btn_Buscar))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(Txt_unidadentrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Txt_nombreunidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(Txt_unidadsalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                    .addComponent(Txt_acronimomedida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(Txt_estatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Btn_Guardar)
                     .addComponent(Btn_Modificar)
@@ -226,40 +238,45 @@ public class Mantenimiento_Unidad extends javax.swing.JFrame {
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
+        jButton1.setText("Ayuda");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(33, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(90, 90, 90)
+                .addComponent(jButton1)
+                .addGap(60, 60, 60))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Txt_unidadentradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Txt_unidadentradaActionPerformed
+    private void Txt_nombreunidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Txt_nombreunidadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Txt_unidadentradaActionPerformed
+    }//GEN-LAST:event_Txt_nombreunidadActionPerformed
 
     private void Btn_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_GuardarActionPerformed
         // TODO add your handling code here:
@@ -268,9 +285,10 @@ public class Mantenimiento_Unidad extends javax.swing.JFrame {
         UnidadDAO unidadDAO = new UnidadDAO();
         Unidad unidadAInsertar = new Unidad();
         //String cbxbodega = cbx_bodega.getSelectedItem().toString();
-        unidadAInsertar.setPKcodigoUnidad((int) Integer.parseInt(Txt_id.getText()));
-        unidadAInsertar.setUnidadEntrada(Txt_unidadentrada.getText());
-        unidadAInsertar.setUnidadSalida(Txt_unidadsalida.getText());
+        unidadAInsertar.setPKcodigoUnidad(Txt_id.getText());
+        unidadAInsertar.setNombre_unidad(Txt_nombreunidad.getText());
+        unidadAInsertar.setMedida_acronimo(Txt_acronimomedida.getText());
+        unidadAInsertar.setEstatus_unidad(Txt_estatus.getText());
         unidadDAO.insert(unidadAInsertar);
         llenadoDeTablas();
         limpiar();
@@ -280,9 +298,10 @@ public class Mantenimiento_Unidad extends javax.swing.JFrame {
         // TODO add your handling code here:
         UnidadDAO unidadDAO = new UnidadDAO();
         Unidad unidadAActualizar = new Unidad();
-        unidadAActualizar.setPKcodigoUnidad(Integer.parseInt(Txt_id.getText()));
-        unidadAActualizar.setUnidadEntrada(Txt_unidadentrada.getText());
-        unidadAActualizar.setUnidadSalida(Txt_unidadsalida.getText());
+        unidadAActualizar.setPKcodigoUnidad(Txt_id.getText());
+        unidadAActualizar.setNombre_unidad(Txt_nombreunidad.getText());
+        unidadAActualizar.setMedida_acronimo(Txt_acronimomedida.getText());
+        unidadAActualizar.setEstatus_unidad(Txt_estatus.getText());
         unidadDAO.update(unidadAActualizar);
         JOptionPane.showMessageDialog(null, "Modificación Exitosa.");
         llenadoDeTablas();
@@ -293,7 +312,7 @@ public class Mantenimiento_Unidad extends javax.swing.JFrame {
         // TODO add your handling code here:
         UnidadDAO unidadDAO = new UnidadDAO();
         Unidad unidadAEliminar = new Unidad();
-        unidadAEliminar.setPKcodigoUnidad(Integer.parseInt(Txt_id.getText()));
+        unidadAEliminar.setPKcodigoUnidad(Txt_id.getText());
         unidadDAO.delete(unidadAEliminar);
         JOptionPane.showMessageDialog(null, "Registro Eliminado.");
 
@@ -348,13 +367,16 @@ public class Mantenimiento_Unidad extends javax.swing.JFrame {
     private javax.swing.JButton Btn_Modificar;
     private javax.swing.JButton Btn_Reporte;
     private javax.swing.JTable Tbl_unidad;
+    private javax.swing.JTextField Txt_acronimomedida;
+    private javax.swing.JTextField Txt_estatus;
     private javax.swing.JTextField Txt_id;
-    private javax.swing.JTextField Txt_unidadentrada;
-    private javax.swing.JTextField Txt_unidadsalida;
+    private javax.swing.JTextField Txt_nombreunidad;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

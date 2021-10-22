@@ -11,11 +11,11 @@ package Comercial.dominio;
  */
 public class Bodega {
 
-    int PKcodigoBodega;
+    String PKcodigoBodega;
     String nombreBodega;
     String estatusBodega;
 
-    public int getPKcodigoBodega() {
+    public String getPKcodigoBodega() {
         return PKcodigoBodega;
     }
 
@@ -27,7 +27,7 @@ public class Bodega {
         return estatusBodega;
     }
 
-    public void setPKcodigoBodega(int PKcodigoBodega) {
+    public void setPKcodigoBodega(String PKcodigoBodega) {
         this.PKcodigoBodega = PKcodigoBodega;
     }
 
@@ -40,6 +40,4 @@ public class Bodega {
     }
 
    
-
-    
 }

@@ -21,6 +21,11 @@ public class Mantenimiento_Bodega extends javax.swing.JFrame {
     /**
      * Creates new form Mantenimiento_Bodega
      */
+
+    
+    
+    
+    
     public void llenadoDeTablas() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID Bodega");
@@ -32,7 +37,7 @@ public class Mantenimiento_Bodega extends javax.swing.JFrame {
         Tbl_tablabodega.setModel(modelo);
         String[] dato = new String[3];
         for (int i = 0; i < bodega.size(); i++) {
-            dato[0] = Integer.toString(bodega.get(i).getPKcodigoBodega());
+            dato[0] = bodega.get(i).getPKcodigoBodega();
             dato[1] = bodega.get(i).getNombreBodega();
             dato[2] = bodega.get(i).getEstatusBodega();
 
@@ -44,7 +49,7 @@ public class Mantenimiento_Bodega extends javax.swing.JFrame {
     public void buscar() {
         Bodega bodegaAConsultar = new Bodega();
         BodegaDAO bodegaDAO = new BodegaDAO();
-        bodegaAConsultar.setPKcodigoBodega(Integer.parseInt(Txt_id.getText()));
+        bodegaAConsultar.setPKcodigoBodega(Txt_id.getText());
         bodegaAConsultar = bodegaDAO.query(bodegaAConsultar);
         Txt_nombre.setText(bodegaAConsultar.getNombreBodega());
         Txt_estatus.setText(String.valueOf(bodegaAConsultar.getEstatusBodega()));
@@ -286,7 +291,7 @@ public class Mantenimiento_Bodega extends javax.swing.JFrame {
         BodegaDAO bodegaDAO = new BodegaDAO();
         Bodega bodegaAInsertar = new Bodega();
         //String cbxbodega = cbx_bodega.getSelectedItem().toString();
-        bodegaAInsertar.setPKcodigoBodega((int) Integer.parseInt(Txt_id.getText()));
+        bodegaAInsertar.setPKcodigoBodega(Txt_id.getText());
         bodegaAInsertar.setNombreBodega(Txt_nombre.getText());
         bodegaAInsertar.setEstatusBodega(Txt_estatus.getText());
         bodegaDAO.insert(bodegaAInsertar);
@@ -296,14 +301,14 @@ public class Mantenimiento_Bodega extends javax.swing.JFrame {
 
     private void Btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_modificarActionPerformed
         // TODO add your handling code here:
-        BodegaDAO bodegaDAO = new BodegaDAO();
+        BodegaDAO bodegaDAO = new  BodegaDAO();
         Bodega bodegaAActualizar = new Bodega();
-        bodegaAActualizar.setPKcodigoBodega(Integer.parseInt(Txt_id.getText()));
+        bodegaAActualizar.setPKcodigoBodega(Txt_id.getText());
         bodegaAActualizar.setNombreBodega(Txt_nombre.getText());
         bodegaAActualizar.setEstatusBodega(Txt_estatus.getText());
+
         bodegaDAO.update(bodegaAActualizar);
         JOptionPane.showMessageDialog(null, "Modificación Exitosa.");
-
         llenadoDeTablas();
         limpiar();
     }//GEN-LAST:event_Btn_modificarActionPerformed
@@ -312,7 +317,7 @@ public class Mantenimiento_Bodega extends javax.swing.JFrame {
         // TODO add your handling code here:
         BodegaDAO bodegaDAO = new BodegaDAO();
         Bodega bodegaAEliminar = new Bodega();
-        bodegaAEliminar.setPKcodigoBodega(Integer.parseInt(Txt_id.getText()));
+        bodegaAEliminar.setPKcodigoBodega(Txt_id.getText());
         bodegaDAO.delete(bodegaAEliminar);
         JOptionPane.showMessageDialog(null, "Registro Eliminado.");
 

@@ -6,6 +6,7 @@
 package Comercial.datos;
 
 import Comercial.dominio.Bodega;
+import Comercial.dominio.Ruta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,30 +19,46 @@ import javax.swing.JOptionPane;
  *
  * @author Diana
  */
-public class BodegaDAO {
+public class RutaDAO {
+    
+    
+    private static final String SQL_SELECT = "SELECT PK_codigo_transporteruta, nombre_conductoruta, "
+            + "nombre_transporteruta, tipo_transporteruta, ubicacion_transporteruta, direccion_transporteruta,"
+            + "hora_salida_transporteruta, hora_entrada_transporteruta, estatus_transporteruta FROM tbl_transporteruta";
+    
+    private static final String SQL_INSERT = "INSERT INTO tbl_transporteruta (K_codigo_transporteruta, nombre_conductoruta, "
+            + "nombre_transporteruta, tipo_transporteruta, ubicacion_transporteruta, direccion_transporteruta,"
+            + "hora_salida_transporteruta, hora_entrada_transporteruta, estatus_transporteruta) VALUES(?,?,?,?,?,?,?,?,?)";
+    
+    private static final String SQL_UPDATE = "UPDATE tbl_transporteruta SET  PK_codigo_transporteruta, nombre_conductoruta= ?, "
+            + "nombre_transporteruta= ?, tipo_transporteruta=?, ubicacion_transporteruta=?, direccion_transporteruta=?,"
+            + "hora_salida_transporteruta=?, hora_entrada_transporteruta=? WHERE PK_codigo_bodega";
+    
+    private static final String SQL_QUERY = "SELECT PK_codigo_transporteruta, nombre_conductoruta, "
+            + "nombre_transporteruta, tipo_transporteruta, ubicacion_transporteruta, direccion_transporteruta,"
+            + "hora_salida_transporteruta, hora_entrada_transporteruta, estatus_transporteruta"
+            + " FROM tbl_transporteruta WHERE PK_codigo_transporteruta=?";
+    
+    private static final String SQL_DELETE = "DELETE FROM tbl_transporteruta WHERE PK_codigo_transporteruta=?";
 
-    private static final String SQL_SELECT = "SELECT PK_codigo_bodega, nombre_bodega, estatus_bodega FROM tbl_bodega";
-    private static final String SQL_INSERT = "INSERT INTO tbl_bodega (PK_codigo_bodega, nombre_bodega, estatus_bodega) VALUES(?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE tbl_bodega SET  PK_codigo_bodega, nombre_bodega= ?, estatus_bodega= ? WHERE PK_codigo_bodega";
-    private static final String SQL_QUERY = "SELECT PK_codigo_bodega, nombre_bodega, estatus_bodega FROM tbl_bodega WHERE PK_codigo_bodega=?";
-    private static final String SQL_DELETE = "DELETE FROM tbl_bodega WHERE PK_codigo_bodega=?";
-
-    public List<Bodega> select() {
+    public List<Ruta> select() {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Bodega bodega = null;
-        List<Bodega> bodegas = new ArrayList<Bodega>();
+        Ruta ruta = null;
+        List<Ruta> rutas = new ArrayList<Ruta>();
 
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                String PK_codigo_bodega = rs.getString("PK_codigo_bodega");
-                String nombreBodega = rs.getString("nombre_bodega");
-                String estatusBodega = rs.getString("estatus_bodega");
-
+                String PK_codigo_transporteruta = rs.getString("PK_codigo_transporteruta");
+                String nombre_conductoruta = rs.getString("nombre_conductoruta");
+                String nombre_transporteruta = rs.getString("nombre_transporteruta");
+                String tipo_transporteruta = rs.getString("tipo_transporteruta");
+                String ubicacion_transporteruta = rs.getString("ubicacion_transporteruta");
+                
                 bodega = new Bodega();
                 bodega.setPKcodigoBodega(PK_codigo_bodega);
                 bodega.setNombreBodega(nombreBodega);
@@ -174,4 +191,10 @@ public class BodegaDAO {
 
         return rows;
     }
+    
+    
+    
+    
+    
+    
 }
